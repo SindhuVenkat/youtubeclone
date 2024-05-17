@@ -18,7 +18,7 @@ const dispatch = useDispatch()
 const getVideos = async() => {
     const data = await fetch(YOUTUBE_URL)
     const json = await data.json()
-    console.log(json.items,'json')
+    console.log(json,'json it')
     setVideos(json.items)
     //dispatch(getYoutubeid(json.items))
 }

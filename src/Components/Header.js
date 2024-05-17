@@ -1,6 +1,7 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toogleMenu } from "../utils/appSlice";
 import { SEARCH_API } from "../utils/constants";
+import {cacheSearchResults} from '../utils/searchSlice'
 import { useEffect, useState } from "react";
 
 const Header = () => {
@@ -13,8 +14,24 @@ const[searchQuery, setSearchQuery] = useState('')
 const [suggestions, setSuggestions] = useState([])
 const [showSuggestion, setShowSuggestion] = useState(false)
 
+const searchcache = useSelector(store =>  store.search)
+console.log(searchcache,'se')
+console.log(searchcache[searchQuery],'searchcache')
+
+
+
 useEffect(()=>{
-    getSearchResults()
+    const timer = setTimeout(()=>{
+        if(searchcache[searchQuery]){
+            setSuggestions(searchcache[searchQuery])
+        }else{
+        getSearchResults()
+    }
+    },200)
+return() => {
+    clearTimeout(timer)
+}
+
 },[searchQuery])
 
 const getSearchResults = async() => {
@@ -23,6 +40,12 @@ const getSearchResults = async() => {
     const json = await data.json()
     console.log(json[1],'search')
     setSuggestions(json[1])
+
+    dispatch(
+        cacheSearchResults({
+          [searchQuery]: json[1],
+        })
+      );
 
 }
 catch(err){

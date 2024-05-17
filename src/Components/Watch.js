@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { hideMenu } from "../utils/appSlice";
+import CommentsContainer from "./CommentsContainer";
 
 const Watch = () => {
     
@@ -29,6 +30,7 @@ useEffect(()=>{
             allowFullScreen
           ></iframe>
             </div>
+            <CommentsContainer/>
             </div>
     )
 }
