@@ -27,7 +27,7 @@ const getYoutubeids = videos.map((x) => (x.id))
 dispatch(getYoutubeid(getYoutubeids))
 
     return(
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-between">
         {videos.map((info)=>(
             <div>
           <Link to={"/watch?v=" + info.id}>  <Videocard info={info} /></Link>
